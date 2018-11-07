@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="uft-8">
+  <title>首页</title>
+
+  <link href="../public/css/index.css" rel="stylesheet">
+
+  
+</head>
+<body>
+
+  <header>
+      <h1><a href="/"><%= username %></a></h1>
+      <p>如果没有为陌上悄然伫立并为陌上风情所陶醉的人，那么花开也寂寞,风情也苍白...</p>
+  </header>
+  <!--nav begin-->
+  <div id="nav">
+      <ul>
+          <li><a href="/" >网站首页</a></li>
+          <li><a href="#" target="_blank" title="慢生活">慢生活</a></li>
+          <li><a href="#" target="_blank" title="技术探讨">技术探讨</a></li>
+
+          <li><a href="#" target="_blank" title="碎言碎语">碎言碎语</a></li>
+          <li><a href="#" target="_blank" title="HTML5业界">HTML5业界</a></li>
+          <li><a href="#" target="_blank" title="作品展示">作品展示</a></li>       
+          <li><a href="#" target="_blank" title="JS 实例代码演示">JS实例</a></li>
+          <% if(show){ %>
+          <li><a href="http://localhost:8989/create" target="_blank" title="发布">发布</a></li>
+          <li><a href="http://localhost:8989/quit"  title="退出">退出</a></li>
+          <% }else{ %>
+          <li><a href="http://localhost:8989/login" target="_blank" title="登录">登录</a></li>
+          <li><a href="http://localhost:8989/login" target="_blank" title="注册">注册</a></li>
+            <% } %>
+      </ul>
+  </div>
+  <!--nav end-->
+  <div class="lace_hd_ft"></div>
+      <article>  
+        <div class="blog">
+          <h3><p>最新文章<span>New Blog</span></p></h3>
+         
+
+
+        <%  for(var i=0;i<list.length;i++){ %>
+             <div class="bloglist">
+              <h2><a href="/"> <%= list[i].username %></a></h2>
+              <p class="datetime">2013-5-20</p>
+              <ul class="topimg">
+                <img src="../public/images/2011714152744924.jpg" width="100px">
+              </ul>
+              <ul class="content">
+                   <h4><%= list[i].title %></h4>
+                   <p><%= list[i].content %></p>
+              </ul>
+              <p class="read"><a href="/">阅读>></a></p>
+         </div> 
+
+        <% } %>
+
+
+
+      
+      
+
+    </div>    
+
+          <aside> 
+            <img src="../public/images/about.png" class="about">
+            <div class="vcard">
+              <p class="fn">姓名：小猪包</p>
+              <p class="nickname">网名：随遇而安</p>
+           
+              <p class="address">现居：广州</p>
+              <p class="role">职业：web前端</p>
+            </div>  
+            <h2>博客分类</h2>
+            <ul>
+              <li><a href="/">慢生活(3)</a></li>
+              <li><a href="/">程序人生(25)</a></li>
+              <li><a href="/">经典美文(39)</a></li>
+            </ul>
+            <h2>近期文章</h2>
+            <ul>
+              <li><a href="/">女孩都有浪漫的小情怀</a></li>
+              <li><a href="/">也许下个路口就会遇见希望</a></li>
+              <li><a href="/">6月毕业季，祝福送给你</a></li>
+              <li><a href="/">生活常有缺席的-可搞笑从来不缺席</a></li>
+              <li><a href="/">为了一个不存在的梦，执念了那么多年</a></li>
+            </ul>
+            <h2>文章归档</h2>
+            <ul>
+              <li><a href="/">2008 年三月</a></li>
+              <li><a href="/">2008 年四月</a></li>
+              <li><a href="/">2008 年六月</a></li>
+            </ul>
+           
+           
+
+          </aside>  
+    </article>
+
+    <div class="page">
+       <button class="up">上一页</button>
+      <ol>
+        <%  for(var i=0;i<num;i++){ %>
+            <li>
+             <a href="http://localhost:8989/page?n=<%= i %>"><%= (i+1) %></a>
+            </li>
+
+          
+          <% } %>
+        </ol>
+         <span><%= n %></span>
+
+      <button class="down">下一页</button>
+    </div>
+<script src='../public/js/jquery.min.js'></script>
+<script src="../public/js/silder.js"></script>
+<script>
+  $('.up').click(function(event) {
+    var m=$('.page span').html();
+    m=parseInt(m)-1;
+
+      // 判断是否到第一页
+    if(m<0){
+      m=0;
+    }
+
+    location.href='http://localhost:8989/page?n='+m
+  });
+
+// 下一页
+  $('.down').click(function(event) {
+    var m=$('.page span').html();
+    m=parseInt(m)+1;
+    console.log("m="+m);
+
+    //  获取最后一个li里a的html值；
+    var a=$("ol li:last-child").children('a').html();
+
+    // 判断是否到最后一页
+    if(m>=a){
+      m=a-1;
+    }
+
+    location.href='http://localhost:8989/page?n='+m
+  });
+
+   // 当前点击的li变色
+   $('.page ol li').eq($('.page span').html()).addClass('one').siblings().removeClass('one')
+
+
+    </script>
+</script>
+</body>
+</html>

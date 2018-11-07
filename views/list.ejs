@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>个人博客</title>
+		<link rel="stylesheet" href="../public/css/bootstrap.css">
+		<link rel="stylesheet" href="../public/css/style.css">
+		<style>
+			  *{
+		  	padding: 0px;
+		  	margin: 0px;
+		  	list-style: none;
+		  }
+
+		    ol li{
+		    	width: 30px;
+		    	height: 30px;
+		    	background-color: #999;
+		    	border-radius: 50%;
+		    	float: left;
+		    	margin-right: 20px;
+		    	text-align: center;
+		    	color: #fff;
+		    	cursor: pointer;
+		    	line-height:30px;
+		    }
+		    
+
+		    .one{
+				background: skyblue;
+			}
+			span{
+				display: none;
+			}
+			.up,.down{
+				height:30px;
+				float:left;
+				margin-right:20px;
+			}
+			.page{
+				width:600px;
+				height:200px;
+				margin:40px auto;
+			}
+			.page a{
+			    display:block;
+		    	text-decoration: none;
+		    	color: #fff;
+		    }
+
+		    h4{
+		    	text-align:center;
+		    	font-weight:bold;
+		    }
+		    p{
+		    	    text-indent:2em;
+		    }
+		 
+		</style>
+	</head>
+	<body>
+		<div class="menu">
+			<img src="../public/images/menu.png" alt="" width="18px">
+			  <% if(show){ %>
+			<ul class="list-unstylend">
+				<li><a href="http://localhost:8989/create">发布</a></li>
+				<li><a href="http://localhost:8989/quit">退出</a></li>
+			</ul>
+			<% }else{ %>
+
+			<ul class="list-unstylend">
+				<li><a href="http://localhost:8989/login">登录</a></li>
+				<li><a href="http://localhost:8989/login">注册</a></li>
+			</ul>
+
+		   <% } %>
+		</div>
+		
+		<h2 class="text-center title">我的说说</h2>
+		<div class="list">
+	    	<%  for(var i=0;i<list.length;i++){ %>
+			<div class="media">
+				  <div class="media-left" >
+				    <a href="#">
+				     <%= list[i].username %>
+				    </a>
+				  </div>
+				  <div class="media-body">
+				    <h4 class="media-heading"><%= list[i].title %></h4>
+				    <p><%= list[i].content %></p>
+				  </div>
+				</div>
+
+		  
+			
+		</div>
+
+		<div class="page">
+			 <button class="up">上一页</button>
+			<ol>
+				<%  for(var i=0;i<num;i++){ %>
+	                   <li>
+	                      <a href="http://localhost:8989/page?n=<%= i %>"><%= (i+1) %></a>
+	                  </li>
+
+					
+				  <% } %>
+		    </ol>
+	       <span><%= n %></span>
+
+		  <button class="down">下一页</button>
+		</div>
+
+		<script src='../public/js/jquery.min.js'></script>
+		<script src="../public/js/bootstrap.min.js"></script>
+		<script src="../public/js/my.js"></script>
+		<script>
+		  // 上一页
+
+$('.up').click(function(event) {
+		var m=$('span').html();
+		m=parseInt(m)-1;
+
+      // 判断是否到第一页
+		if(m<0){
+			m=0;
+		}
+
+		location.href='http://localhost:8989/page?n='+m
+	});
+
+// 下一页
+  $('.down').click(function(event) {
+		var m=$('span').html();
+		m=parseInt(m)+1;
+		console.log("m="+m);
+
+		//  获取最后一个li里a的html值；
+		var a=$("ol li:last-child").children('a').html();
+
+		// 判断是否到最后一页
+		if(m>=a){
+			m=a-1;
+		}
+
+		location.href='http://localhost:8989/page?n='+m
+	});
+
+   // 当前点击的li变色
+   $('ol li').eq($('span').html()).addClass('one').siblings().removeClass('one')
+
+
+		</script>
+	</body>
+</html>
